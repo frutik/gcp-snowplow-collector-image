@@ -2,6 +2,8 @@
 
 Packer stuff to create Scala Stream Collector base image for GCP
 
+# Build
+
 1. Install packer
 2. Create project in GCP
 3. Download json access key for this project
