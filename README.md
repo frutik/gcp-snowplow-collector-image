@@ -1,0 +1,1 @@
+# gcp-snowplow-image
