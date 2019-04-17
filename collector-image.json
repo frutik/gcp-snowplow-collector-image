@@ -1,0 +1,35 @@
+{
+  "variables": {
+    "gcp_project_id": "{{ env `PROJECT_ID` }}",
+    "gcp_zone": "{{ env `ZONE` }}"
+  },
+  "builders": [
+    {
+      "type": "googlecompute",
+      "account_file": "credentials/{{ user `gcp_project_id` }}.json",
+      "project_id": "{{ user `gcp_project_id` }}",
+      "source_image": "ubuntu-1604-xenial-v20180814",
+      "image_name": "collector-node-{{ timestamp }}",
+      "disk_size": 10,
+      "ssh_username": "root",
+      "zone": "{{ user `gcp_zone` }}",
+      "image_family": "collector-node"
+    }
+  ],
+  "provisioners": [
+      {
+        "type": "file",
+        "source": "configs/config.hocon",
+        "destination": "/tmp/config.hocon"
+      },
+      {
+        "type": "file",
+        "source": "configs/.env",
+        "destination": "/tmp/.env"
+      },
+      {
+        "type": "shell",
+        "script": "provisioners/install.sh"
+      }
+  ] 
+}
