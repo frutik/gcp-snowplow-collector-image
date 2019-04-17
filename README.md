@@ -10,7 +10,7 @@ Packer stuff to create Scala Stream Collector base image for GCP
 
 # Usage
 
-This script will create a base image in Google Cloud. You can create an virtual machine or use it in template.
+This script will create a base image in Google Cloud. You can create an virtual machine from this image or use it in a template.
 
 # Configuration 
 
