@@ -28,6 +28,11 @@
         "destination": "/tmp/.env"
       },
       {
+        "type": "file",
+        "source": "configs/snowplow.service",
+        "destination": "/tmp/snowplow.service"
+      },
+      {
         "type": "shell",
         "script": "provisioners/install.sh"
       }
