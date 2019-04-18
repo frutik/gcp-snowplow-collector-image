@@ -18,3 +18,7 @@ mv /tmp/config.hocon $DIR/config.hocon
 wget https://dl.bintray.com/snowplow/snowplow-generic/snowplow_scala_stream_collector_google_pubsub_${VERSION}.zip
 unzip snowplow_scala_stream_collector_google_pubsub_${VERSION}.zip
 
+mv /tmp/snowplow.service /etc/systemd/system/snowplow.service
+
+systemctl daemon-reload
+systemctl enable snowplow.service
