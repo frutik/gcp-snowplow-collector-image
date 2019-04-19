@@ -1,21 +1,20 @@
-data "google_compute_image" "my_image" {
-  family  = "debian-9"
-  project = "debian-cloud"
+data "google_compute_image" "collector_image" {
+  family  = "collector-node"
+  project = "<project name>"
 }
 
-
 resource "google_compute_instance_template" "default" {
-  name        = "appserver-template"
-  description = "This template is used to create app server instances."
+  name        = "collector-template"
+  description = "This template is used to create collector instances."
 
   tags = ["foo", "bar"]
 
   labels = {
-    environment = "dev"
+    environment = "prod"
   }
 
   instance_description = "description assigned to instances"
-  machine_type         = "n1-standard-1"
+  machine_type         = "f1-micro"
   can_ip_forward       = false
 
   scheduling {
@@ -31,18 +30,21 @@ resource "google_compute_instance_template" "default" {
   //}
   disk {
     initialize_params {
-      image = "${data.google_compute_image.my_image.self_link}"
+        image = "${data.google_compute_image.collector_image.self_link}"
+	size  = 10
+	type  = "pd-ssd"
+	zone  = "europe-west1-b"
     }
   }
 
 
   // Use an existing disk resource
-  disk {
+  //disk {
     // Instance Templates reference disks by name, not self link
-    source      = "${google_compute_disk.foobar.name}"
-    auto_delete = false
-    boot        = false
-  }
+//    source      = "${google_compute_disk.foobar.name}"
+//    auto_delete = false
+//    boot        = false
+ // }
 
   network_interface {
     network = "default"
@@ -61,16 +63,16 @@ resource "google_compute_instance_template" "default" {
   }
 }
 
-data "google_compute_image" "my_image" {
-  family  = "debian-9"
-  project = "debian-cloud"
-}
+//data "google_compute_image" "my_image" {
+//  family  = "debian-9"
+//  project = "debian-cloud"
+//}
 
-resource "google_compute_disk" "foobar" {
-  name  = "existing-disk"
-  image = "${data.google_compute_image.my_image.self_link}"
-  size  = 10
-  type  = "pd-ssd"
-  zone  = "us-central1-a"
-}
+//resource "google_compute_disk" "foobar" {
+//  name  = "existing-disk"
+//  image = "${data.google_compute_image.my_image.self_link}"
+//  size  = 10
+//  type  = "pd-ssd"
+//  zone  = "us-central1-a"
+//}
 
