@@ -19,17 +19,17 @@
   "provisioners": [
       {
         "type": "file",
-        "source": "configs/config.hocon",
+        "source": "files/config.hocon",
         "destination": "/tmp/config.hocon"
       },
       {
         "type": "file",
-        "source": "configs/.env",
+        "source": "files/.env",
         "destination": "/tmp/.env"
       },
       {
         "type": "file",
-        "source": "configs/snowplow.service",
+        "source": "files/snowplow.service",
         "destination": "/tmp/snowplow.service"
       },
       {
