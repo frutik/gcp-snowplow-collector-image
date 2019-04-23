@@ -8,6 +8,7 @@ User=root
 Type=simple
 TimeoutSec=0
 PIDFile=/var/run/collector.pid
+EnvironmentFile=/opt/collector/.env
 ExecStart=/usr/bin/java -jar /opt/collector/snowplow-stream-collector-google-pubsub.jar --config /opt/collector/config.hocon 2>&1> /dev/null
 ExecStop=/bin/kill -HUP $MAINPID
 #ExecReload=/bin/kill -HUP $MAINPID
