@@ -7,17 +7,18 @@ After=network.target
 User=root
 Type=simple
 TimeoutSec=0
-PIDFile=/var/run/snowplow.pid
-ExecStart=java -jar /opt/snowplow/snowplow-stream-collector-google-pubsub.jar --config /opt/snowplow/config.hocon 2>&1> /dev/null #path to script
-#ExecStop=/bin/kill -HUP $MAINPID
+PIDFile=/var/run/collector.pid
+ExecStart=/usr/bin/java -jar /opt/collector/snowplow-stream-collector-google-pubsub.jar --config /opt/collector/config.hocon 2>&1> /dev/null
+ExecStop=/bin/kill -HUP $MAINPID
 #ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
 
 Restart=always
 RestartSec=10s
 
-StandardOutput=null #If you don't want to make toms of logs you can set it null if you sent a file or some other options it will send all php output to this one.
-StandardError=/home/shrikant/workspace/alphonso-platform/app/Http/Controllers/Fulfilment/chatSocket.log #path to error log file
+StandardOutput=null
+#If you don't want to make toms of logs you can set it null if you sent a file or some other options it will send all php output to this one.
+StandardError=null
 
 [Install]
 WantedBy=default.target

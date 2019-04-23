@@ -29,12 +29,12 @@ resource "google_compute_instance_template" "default" {
   //  boot         = true
   //}
   disk {
-    initialize_params {
-        image = "${data.google_compute_image.collector_image.self_link}"
+//    initialize_params {
+        source = "${data.google_compute_image.collector_image.self_link}"
 	size  = 10
 	type  = "pd-ssd"
-	zone  = "europe-west1-b"
-    }
+	//zone  = "europe-west1-b"
+//    }
   }
 
 
