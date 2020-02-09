@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION="0.15.0"
+VERSION="1.0..0"
 DIR="/opt/collector"
 
 
@@ -26,3 +26,4 @@ chmod +x /etc/systemd/system/snowplow.service
 
 systemctl daemon-reload
 systemctl enable snowplow.service
+

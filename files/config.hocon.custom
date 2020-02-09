@@ -19,10 +19,10 @@
 # 'collector' contains configuration options for the main Scala collector.
 collector {
   # The collector runs as a web service specified on the following interface and port.
-  interface = "0.0.0.0"
-  #interface = ${?COLLECTOR_INTERFACE}
-  port = 8080
-  #port = ${?COLLECTOR_PORT}
+  #interface = "0.0.0.0"
+  interface = ${COLLECTOR_INTERFACE}
+  #port = 8080
+  port = ${COLLECTOR_PORT}
 
   # Configure the P3P policy header.
   p3p {
@@ -52,12 +52,12 @@ collector {
     expiration = "365 days"
     #expiration = ${?COLLECTOR_COOKIE_EXPIRATION}
     # Network cookie name
-    name = {{collectorCookieName}}
+    name = "collectorCookieName"
     #name = ${?COLLECTOR_COOKIE_NAME}
     # The domain is optional and will make the cookie accessible to other
     # applications on the domain. Comment out this line to tie cookies to
     # the collector's full domain
-    domain = "{{cookieDomain}}"
+    domain = "cookieDomain"
     #domain = ${?COLLECTOR_COOKIE_DOMAIN}
   }
 
@@ -161,27 +161,15 @@ collector {
     sink {
       enabled = googlepubsub
 
-      # Region where the streams are located
-      #region = {{kinesisRegion}}
-      #region = ${?COLLECTOR_STREAMS_SINK_REGION}
+      googleProjectId = ${GCP_PROJECT}
 
-      ## Optional endpoint url configuration to override aws kinesis endpoints,
-      ## this can be used to specify local endpoints when using localstack
-      # customEndpoint = {{kinesisEndpoint}}
-      # customEndpoint = ${?COLLECTOR_STREAMS_SINK_CUSTOM_ENDPOINT}
-
-      # Thread pool size for Kinesis API requests
-      #threadPoolSize = 10
-      #threadPoolSize = ${?COLLECTOR_STREAMS_SINK_THREAD_POOL_SIZE}
-
-      googleProjectId = ID
       ## Minimum, maximum and total backoff periods, in milliseconds
       ## and multiplier between two backoff
       backoffPolicy {
-        minBackoff = {{minBackoffMillis}}
-        maxBackoff = {{maxBackoffMillis}}
-        totalBackoff = {{totalBackoffMillis}} # must be >= 10000
-        multiplier = {{backoffMultiplier}}
+        minBackoff = 1000
+        maxBackoff = 5000
+        totalBackoff = 20000 # must be >= 10000
+        multiplier = 3
       }
     }
 
@@ -192,11 +180,11 @@ collector {
     # - the combined size of the stored records reaches byte-limit or
     # - the time in milliseconds since the buffer was last emptied reaches time-limit
     buffer {
-      byteLimit = {{bufferByteThreshold}}
+      byteLimit = 2048
       #byteLimit = ${?COLLECTOR_STREAMS_BUFFER_BYTE_LIMIT}
-      recordLimit = {{bufferRecordThreshold}} # Not supported by Kafka; will be ignored
+      recordLimit = 100 # Not supported by Kafka; will be ignored
       #recordLimit = ${?COLLECTOR_STREAMS_BUFFER_RECORD_LIMIT}
-      timeLimit = {{bufferTimeThreshold}}
+      timeLimit = 1000
       #timeLimit = ${?COLLECTOR_STREAMS_BUFFER_TIME_LIMIT}
     }
   }
